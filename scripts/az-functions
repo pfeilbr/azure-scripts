@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+
+import os
+import subprocess
+
+def sh(cmd):
+    output = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE)
+    return output.stdout.decode('utf-8')
+
+# az group create --name "group01" --location eastus
+
+def get_all_resource_group_names():
+    cmd = "az group list | jq '.[].name'"
+    output_string=sh(cmd)
+    return output_string.split()
+
+cmd = "az ad signed-in-user show | jq '.'"
+#print(sh(cmd))
+
+print(get_all_resource_group_names()[0])
+
+#output = os.system(cmd)
+# print(output)
+
+# get_tenant_id() {
+#     tenant_id=$(az account show | jq '.tenantId')
+#     echo $tenant_id
+# }
+
+# get_all_resource_groups() {
+#     names=($(az group list | jq '.[].name'))
+#     count=${#names[@]}
+#     echo $count
+#     echo $names
+# }
+
+# get_signed_in_user_details() {
+#     details=$(az ad signed-in-user show | jq '.')
+#     echo $details
+# }
+
+
+# tenant_id=$(get_tenant_id)
+# echo $tenant_id
+
+# get_signed_in_user_details
